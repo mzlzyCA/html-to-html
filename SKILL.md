@@ -1,31 +1,59 @@
 ---
 name: html-to-html
-version: 0.2.0
-description: >
-  Fetch URLs and convert to clean HTML by removing scripts, ads, navigation, and clutter. URL to clean HTML converter, web page cleaner, HTML sanitizer, webpage declutter tool, URL fetcher and cleaner, HTML noise remover, web content purifier, clean HTML extractor, page simplifier, ad-free HTML generator, 网页清洗, URL转HTML, 网页净化工具, HTML清理, 去除网页广告脚本.
-
-  Use when asked to 'fetch URL and clean the HTML', 'convert URL to clean HTML', 'remove ads and scripts from web page', 'get clean HTML from URL', 'sanitize web page HTML', 'declutter this webpage', 'fetch and simplify HTML'. Also handles: 'how do I get clean HTML from a URL?', 'is there a skill that removes junk from web pages?', 'I want to fetch a URL and strip out all the noise', 'can my agent clean up messy web page HTML?'.
-
-  Solves the problem of bloated web pages full of ads, tracking scripts, and navigation clutter, difficulty getting reader-friendly HTML from URLs, messy source code that obscures actual content, and inability to quickly fetch and sanitize web pages for downstream processing. Powered by MinerU for intelligent content extraction and HTML cleaning. Strips scripts, styles, ads, trackers, and non-content elements while preserving semantic structure. Ideal for content archival, web research, data pipelines, and readable HTML generation.
-tags:
-  - html
-  - url-fetcher
-  - web-cleaner
-  - html-sanitizer
-  - content-extraction
-  - mineru
-  - ad-removal
-  - declutter
-  - web-scraping
-  - clean-html
-  - page-simplifier
-  - document-processing
+description: "HTML to HTML - fetch a remote HTML page (URL) and convert it to clean structured HTML using MinerU crawl. Use when you want a cleaned-up HTML version of a web page."
+homepage: https://mineru.net
+metadata: {"openclaw": {"emoji": "📄", "requires": {"bins": ["mineru-open-api"], "env": ["MINERU_TOKEN"]}, "primaryEnv": "MINERU_TOKEN", "install": [{"id": "npm", "kind": "node", "package": "mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via npm"}, {"id": "go", "kind": "go", "package": "github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via go install", "os": ["darwin", "linux"]}]}}
 ---
 
-# HTML To Clean HTML
+# HTML to HTML
 
-Fetch URLs and convert to clean, readable HTML by removing scripts, ads, and clutter using MinerU.
+Fetch a remote web page or local HTML file and convert it to clean structured HTML using MinerU. Strips noise and preserves semantic content.
 
-## Usage
+## Install
 
-Use the mineru tool to fetch a URL and produce clean HTML. Provide the URL and receive sanitized HTML with ads, scripts, tracking code, and non-content elements removed while preserving the semantic structure.
+```bash
+npm install -g mineru-open-api
+# or via Go (macOS/Linux):
+go install github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api@latest
+```
+
+## Quick Start
+
+```bash
+# Crawl a web page and output clean HTML (requires token)
+mineru-open-api crawl https://example.com/article -f html -o ./out/
+
+# Re-extract a local HTML file to clean HTML (requires token)
+mineru-open-api extract page.html -f html -o ./out/
+
+# Batch crawl multiple URLs to HTML (requires token)
+mineru-open-api crawl url1 url2 -f html -o ./pages/
+```
+
+## Authentication
+
+Token required:
+
+```bash
+mineru-open-api auth             # Interactive token setup
+export MINERU_TOKEN="your-token" # Or via environment variable
+```
+
+Create token at: https://mineru.net/apiManage/token
+
+## Capabilities
+
+- Input: remote web page URL or local .html file
+- Output: clean structured HTML (`-f html`)
+- For remote URLs: use `crawl -f html`
+- For local HTML files: use `extract -f html`
+- Requires token — not available in `flash-extract`
+
+## Notes
+
+- HTML output (`-f html`) requires token; not available in `flash-extract`
+- `crawl` supports output formats: md, html, json
+- `extract` supports output formats: md, html, latex, docx, json
+- Output goes to stdout by default; use `-o <dir>` to save to a file or directory
+- All progress/status messages go to stderr; document content goes to stdout
+- MinerU is open-source by OpenDataLab (Shanghai AI Lab): https://github.com/opendatalab/MinerU
